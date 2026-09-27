@@ -1,0 +1,15 @@
+# Librerie scaricate da npm: si ricreano con "npm install",
+# sono migliaia di file e non vanno conservate.
+node_modules
+
+# Cartella prodotta da "npm run build".
+dist
+
+# Salvataggi automatici di Blender: il file buono e' il .blend
+*.blend1
+*.blend2
+
+# Roba di sistema
+Thumbs.db
+desktop.ini
+.DS_Store
