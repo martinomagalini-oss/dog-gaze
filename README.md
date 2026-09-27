@@ -1,7 +1,16 @@
 # Cani che guardano la pallina
 
+**Provalo online:** https://martinomagalini-oss.github.io/dog-gaze/
+
+Trascina un tuo modello 3D (.glb) sopra l'area per vedere la tua griglia.
+
 Web app locale: una griglia di teste del cane che seguono con lo sguardo
 il cursore del mouse o una pallina da tennis che rimbalza.
+
+## Pubblicazione
+
+Il sito si aggiorna da solo: a ogni salvataggio caricato sul ramo principale,
+GitHub ricostruisce l'app e la rimette online. Non serve fare niente a mano.
 
 ## Come avviare
 
