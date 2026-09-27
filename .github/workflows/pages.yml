@@ -1,0 +1,59 @@
+# Costruisce l'app e la pubblica su GitHub Pages a ogni salvataggio caricato
+# sul ramo principale. Non serve fare niente a mano: si carica il codice e il
+# sito si aggiorna da solo dopo un paio di minuti.
+name: Pubblica il sito
+
+on:
+  push:
+    branches: [main]
+  # Permette di rilanciare la pubblicazione a mano dalla scheda Actions.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Se si caricano due salvataggi di fila, la pubblicazione vecchia viene
+# annullata e vale l'ultima: evita che si accavallino.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  costruisci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scarica il codice
+        uses: actions/checkout@v4
+
+      - name: Prepara Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installa le librerie
+        run: npm ci
+
+      - name: Costruisci il sito
+        run: npm run build
+
+      - name: Prepara Pages
+        uses: actions/configure-pages@v5
+
+      - name: Carica il risultato
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  pubblica:
+    needs: costruisci
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.pubblicazione.outputs.page_url }}
+    steps:
+      - name: Metti online
+        id: pubblicazione
+        uses: actions/deploy-pages@v4

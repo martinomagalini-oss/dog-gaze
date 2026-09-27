@@ -176,7 +176,13 @@ export const MODELLI_INCLUSI = {
 };
 
 // Cartella dei modelli dentro public/.
-export const CARTELLA_MODELLI = '/modelli/';
+//
+// Il percorso NON puo' essere scritto fisso come '/modelli/': in locale
+// funzionerebbe, ma una volta pubblicato il sito non sta alla radice del
+// dominio bensi' in una sottocartella, e i modelli verrebbero cercati nel
+// posto sbagliato. BASE_URL vale '/' durante lo sviluppo e la sottocartella
+// giusta una volta costruito il sito.
+export const CARTELLA_MODELLI = import.meta.env.BASE_URL + 'modelli/';
 
 // Quanti secondi di passato conservare nello storico del bersaglio.
 // Deve bastare per il ritardo massimo, con abbondanza.
