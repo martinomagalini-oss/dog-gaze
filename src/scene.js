@@ -19,8 +19,13 @@ export function creaScena(contenitore) {
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     powerPreference: 'high-performance',
+    // Serve alla registrazione video: senza, il browser puo' svuotare il
+    // buffer di disegno prima che riusciamo a copiarne il contenuto, e il
+    // video verrebbe fuori nero.
+    preserveDrawingBuffer: true,
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  const SCALA_NORMALE = Math.min(window.devicePixelRatio, 2);
+  renderer.setPixelRatio(SCALA_NORMALE);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   // ACES comprime dolcemente le alte luci invece di tagliarle di netto.
@@ -108,6 +113,17 @@ export function creaScena(contenitore) {
     ambiente.applica();
   }
 
+  /**
+   * Cambia quanti pixel veri si disegnano per ogni pixel dello schermo.
+   * La registrazione la alza per ottenere un video piu' definito: a video
+   * l'immagine non cambia, diventa solo piu' fitta. Passando null si torna
+   * al valore normale dello schermo.
+   */
+  function impostaScalaPixel(scala) {
+    renderer.setPixelRatio(scala ?? SCALA_NORMALE);
+    adattaAllaFinestra();
+  }
+
   /** Ridisegna la mappa d'ambiente: serve solo se cambiano i suoi colori. */
   function ridisegnaAmbiente() {
     ambiente.ricostruisci();
@@ -120,6 +136,7 @@ export function creaScena(contenitore) {
     adattaAllaFinestra,
     aggiornaDaConfig,
     ridisegnaAmbiente,
+    impostaScalaPixel,
   };
 }
 

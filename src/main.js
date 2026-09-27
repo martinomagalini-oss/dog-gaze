@@ -15,6 +15,7 @@ import { Pallina } from './ball.js';
 import { Sonno } from './sonno.js';
 import { Coreografia } from './coreografia.js';
 import { componiPose } from './posa.js';
+import { Registratore } from './registrazione.js';
 import { creaContatore } from './contatore.js';
 import {
   caricaDaUrl,
@@ -35,6 +36,7 @@ const {
   adattaAllaFinestra,
   aggiornaDaConfig,
   ridisegnaAmbiente,
+  impostaScalaPixel,
 } = creaScena(contenitoreScena);
 
 // Il pannello a destra cambia la larghezza disponibile per la scena:
@@ -43,6 +45,14 @@ new ResizeObserver(adattaAllaFinestra).observe(contenitoreScena);
 
 // ---------- Griglia ----------
 const griglia = new Griglia(scena);
+
+// ---------- Registrazione video ----------
+const registratore = new Registratore(
+  contenitoreScena,
+  renderer,
+  camera,
+  impostaScalaPixel
+);
 
 // ---------- Contatore prestazioni ----------
 const contatore = creaContatore(contenitoreScena);
@@ -287,6 +297,9 @@ renderer.setAnimationLoop(() => {
   componiPose(griglia);
 
   renderer.render(scena, camera);
+
+  // Subito dopo il disegno, finche' l'immagine e' ancora nel buffer.
+  registratore.catturaFotogramma();
 
   contatore.segnaFotogramma({
     teste: griglia.teste.length,

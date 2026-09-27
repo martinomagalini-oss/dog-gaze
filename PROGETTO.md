@@ -154,6 +154,6 @@ tenerle come contributi che si sommano, non come modalita' che si escludono.
 - Respiro/dondolio leggero quando non c'è niente da guardare.
 - Lanciare la pallina con il mouse (trascina e rilascia).
 - Versione mobile: tocco e giroscopio.
-- Registrazione video/GIF.
+- Registrazione GIF (il video MP4 e' stato fatto il 27 settembre 2026).
 - Salvataggio delle impostazioni.
 - Più cani diversi nella stessa griglia.

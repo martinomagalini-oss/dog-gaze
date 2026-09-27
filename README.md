@@ -43,6 +43,7 @@ Poi apri il browser all'indirizzo che compare (di solito http://localhost:5173).
       ambiente.js    la luce d'ambiente generata via codice
       coreografia.js i movimenti che i cani fanno da soli
       posa.js        mette insieme sguardo + coreografia + sonno
+      registrazione.js registrazione video dell'area
       ui.js          pannello di controllo
       stile.css      impaginazione della pagina
     public/
@@ -271,6 +272,41 @@ cerchio. Senza questa accortezza, passando da +179 a -179 gradi (che sono
 due gradi di distanza) la testa percorrerebbe 358 gradi nel verso sbagliato,
 e a ogni giro si vedrebbe uno srotolamento all'indietro.
 
+## Registrare un video
+
+Il pulsante **Registra** sta in alto a destra, accanto al rettangolo. Si preme
+una volta per partire e una volta per fermare; poi compare il pulsante per
+scaricare il file.
+
+Cosa finisce nel video:
+
+- **solo il rettangolo 9:19,5**, non tutta la finestra. Il video esce gia' in
+  formato verticale, pronto da pubblicare, senza i margini vuoti attorno;
+- **non** il contatore degli fps, i messaggi e il pulsante stesso: quelli sono
+  scritti nella pagina, non dentro la scena 3D, quindi non vengono ripresi;
+- il bordo dell'area invece **si vede**, perche' e' disegnato nella scena. Per
+  un video pulito conviene togliere la spunta a "Mostra bordo area".
+
+Il formato e' **MP4** dove il browser sa produrlo (Chrome ed Edge), altrimenti
+WebM. Il nome del file contiene data e ora, cosi' i video non si sovrascrivono.
+
+Comandi, sezione **Aspetto**:
+
+- **Registra solo il rettangolo** — togliendolo riprende tutta la finestra.
+- **Definizione video** — quanti pixel veri disegnare per ogni pixel dello
+  schermo, ma solo mentre registra. A "Come lo schermo" il video esce della
+  misura che il rettangolo ha a video, che e' poca cosa per pubblicarlo;
+  a "Tripla" la stessa scena viene disegnata tre volte piu' fitta e il video
+  esce molto piu' definito. A video non cambia niente, diventa solo piu'
+  nitido. Attenzione pero': disegnare piu' fitto costa lavoro alla scheda
+  video, e se gli fps calano si vede nel filmato.
+- **Qualita video** — quanti dati al secondo. Piu' alto, file piu' pesante e
+  immagine piu' pulita nei movimenti rapidi.
+
+Nota tecnica: il renderer e' creato con `preserveDrawingBuffer` attivo. Senza,
+il browser puo' svuotare il buffer di disegno prima che il codice riesca a
+copiarne il contenuto, e il video verrebbe fuori nero.
+
 ## Come si compone la posa finale
 
 Tre moduli diversi vogliono muovere la stessa testa: lo sguardo, la
@@ -335,6 +371,9 @@ trovati provando dal vivo, regolando le manopole e guardando il risultato.
 | Giri al secondo | 0,3 |
 | Sfasamento fra cani | 22% |
 | Peso sguardo | 100% |
+| Registra solo il rettangolo | si |
+| Definizione video | tripla |
+| Qualita video | 12 Mbps |
 | Sfondo | grigio-azzurro `#4e5b73` |
 
 Il carattere che ne esce: area di attenzione stretta, reazione scattante,

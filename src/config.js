@@ -116,6 +116,17 @@ export const config = {
   // bersaglio e fanno solo la coreografia, a 100 fanno le due cose insieme.
   pesoSguardo: 100,
 
+  // ---------- Registrazione video ----------
+  // Solo il rettangolo, cosi' il video esce gia' in formato verticale
+  // 9:19,5 senza i margini vuoti attorno.
+  registraSoloArea: true,
+  qualitaVideo: 12,   // megabit al secondo
+
+  // Quanti pixel veri disegnare per ogni pixel dello schermo DURANTE la
+  // registrazione. Piu' alto = video piu' definito, ma anche piu' lavoro
+  // per la scheda video: se gli fps calano, si vede nel filmato.
+  risoluzioneVideo: 3,
+
   // ---------- Aspetto ----------
   coloreSfondo: '#4e5b73',
   mostraBordoArea: true, // disegna il rettangolo che delimita l'area
